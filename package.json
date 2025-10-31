@@ -1,0 +1,35 @@
+{
+  "name": "kalshi-clone",
+  "version": "1.0.0",
+  "description": "MVP V-0 i) Orderbook Implementation, where prices are determined by the supply & demand of the bets on different outcomes. ii) User registration, event creation, placing and matching orders, and automated settlement.",
+  "homepage": "https://github.com/1xhasan/Kalshi-clone#readme",
+  "bugs": {
+    "url": "https://github.com/1xhasan/Kalshi-clone/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1xhasan/Kalshi-clone.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "build": "tsc",
+    "start": "node --loader ts-node/esm src/simulate.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "uuid": "^13.0.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
