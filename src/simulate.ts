@@ -8,7 +8,7 @@ function buyYes(market: Market, delta: number) {
   const prices = getPrices(market);
 
   console.log(`Bought ${delta} YES shares for $${cost.toFixed(2)}`);
-  console.log(`New prices → YES: ${(prices.pYes * 100).toFixed(2)}¢, NO: ${(prices.pNo * 100).toFixed(2)}¢`);
+  console.log(`New prices : YES: ${(prices.pYes * 100).toFixed(2)}c, NO: ${(prices.pNo * 100).toFixed(2)}c`);
 }
 
 const market: Market = {
