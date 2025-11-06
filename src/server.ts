@@ -1,7 +1,7 @@
 import express from "express";
 import { pool } from "./db";
 import { costToBuy, getPrices } from "./lmsr";
-import { Market } from "./market";
+import { Market } from "./models/market";
 import { hasUncaughtExceptionCaptureCallback } from "process";
 import { Message } from "@solana/web3.js";
 
@@ -9,15 +9,19 @@ const app = express();
 app.use(express.json());
 
 
+
+
+
 app.post("/user/signin", async (req, res) => {
 
 
   try {
   const {username, password} = req.body;
+  console.log("conneting db ....")
   const result = await pool.query("SELECT * FROM users WHERE username = $1 AND password=$2",[username, password]);
-
+  console.log("db connected. ")
   if(result.rows.length>0) {
-    res.status(200).json({message: "Something went wrong"});
+    res.status(200).json({message: "user has been logged in successfully"});
   } else {
     res.status(401).json({Message: "Username or password is incorrect"});
   }

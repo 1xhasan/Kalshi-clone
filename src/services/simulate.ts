@@ -1,5 +1,5 @@
 // simulate.ts
-import type { Market } from "./market.js";
+import type { Market } from "./models/market.js";
 import  { getPrices, costToBuy } from "./lmsr.js";
 
 function buyYes(market: Market, delta: number) {
