@@ -1,5 +1,4 @@
-// simulate.ts
-import type { Market } from "./models/market.js";
+import type { Market } from "../models/market.js";
 import  { getPrices, costToBuy } from "./lmsr.js";
 
 function buyYes(market: Market, delta: number) {
@@ -17,6 +16,8 @@ const market: Market = {
   q_yes: 0,
   q_no: 0,
   b: 100,
+  resolved: false,
+  result: null
 };
 
 console.log("Initial prices:", getPrices(market));

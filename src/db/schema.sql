@@ -1,27 +1,30 @@
--- market.sql
-CREATE TABLE markets (
+CREATE TABLE IF NOT EXISTS markets (
   id SERIAL PRIMARY KEY,
   question TEXT NOT NULL,
   q_yes DOUBLE PRECISION DEFAULT 0,
   q_no DOUBLE PRECISION DEFAULT 0,
   b DOUBLE PRECISION DEFAULT 100,
+  resolved BOOLEAN  DEFAULT FALSE,
+  result VARCHAR(10) CHECK (result IN('yes', 'no')) DEFAULT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE trades (
+CREATE TABLE IF NOT EXISTS trades (
   id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
   market_id INT REFERENCES markets(id),
   outcome VARCHAR(10) CHECK (outcome IN ('yes', 'no')),
-  delta DOUBLE PRECISION NOT NULL,
-  cost DOUBLE PRECISION NOT NULL,
+  shares NUMERIC NOT NULL,
+  price NUMERIC NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
 
-CREATE TABLE IF NOT EXIST users (
+CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
-  username TEXT UNIQUE,
-  email TEXT UNIQUE,
+  username TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
   password TEXT,
+  balance NUMERIC DEFAULT 1000, --- for test
   created_at TIMESTAMP DEFAULT NOW()
 );

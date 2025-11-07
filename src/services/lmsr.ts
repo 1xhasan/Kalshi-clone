@@ -1,5 +1,4 @@
-// lmsr.ts
-import type { Market } from "./models/market.js"
+import type { Market } from "../models/market";
 
 // LMSR cost function
 export function costFunction(qYes: number, qNo: number, b: number): number {
