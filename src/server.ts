@@ -150,6 +150,8 @@ app.post("/trade", async (req, res) => {
     shares
   );
 
+  console.log("cost, user & user Balance::", cost, user, user.balance);
+
   if(cost> user.balance) {
     return res.status(400).json({error: PG_ERROR_CODES.INSUFFICIENT_BALANCE});
   }
