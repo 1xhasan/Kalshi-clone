@@ -9,6 +9,7 @@ import { initDB } from "./config/dbInit";
 import { error } from "console";
 
 import { DatabaseError, handleDatabaseError, PG_ERROR_CODES } from "./db/errorCodes";
+import { spyOn } from "bun:test";
 
 const app = express();
 app.use(express.json());
@@ -19,9 +20,9 @@ app.post("/user/signin", async (req, res) => {
 
   try {
   const {username, password} = req.body;
-  console.log("conneting db ....")
+  console.log("conneting db ....");
   const result = await pool.query("SELECT * FROM users WHERE username = $1 AND password=$2",[username, password]);
-  console.log("db connected. ")
+  console.log("db connected. ");
   if(result.rows.length>0) {
     res.status(200).json({message: "user has been logged in successfully"});
   } else {
@@ -107,6 +108,34 @@ app.get("/market/:id", async (req, res) => {
   });
   res.json({ ...market, prices });
 });
+
+app.post("/user/load", async (require, resp) => {
+  try{
+
+    const {user_id, loadTxnAmt} = require.body;
+
+    const fetchUser = await pool.query("SELECT * from users where id=$1", [user_id]);
+    if(fetchUser.rows.length === 0) {
+      resp.status(404).json({error: "User not found"});
+    } 
+    const user = fetchUser.rows[0];
+
+    const updatedBalance = Number(user.balance) + Number(loadTxnAmt);
+    const result = await pool.query("UPDATE users set balance = $1 where id=$2", [updatedBalance, user_id]);
+
+    console.log("User has been loaded successfully", result);
+    resp.status(201).json({Message: `User has been loaded successfully ${result.rows[0]}`});
+
+  } catch(err) {
+    console.log("Error Occurred:: ", err);
+    // resp.status()
+    const dbError = handleDatabaseError(err as DatabaseError);
+    console.log("err", err , "dbError", dbError);
+    resp.status(dbError.status).json({ message: dbError.message, detail: dbError.detail });
+ 
+
+  }
+})
 
 app.post("/trade", async (req, res) => {
   try {
