@@ -185,7 +185,7 @@ app.post("/trade", async (req, res) => {
     return res.status(400).json({error: PG_ERROR_CODES.INSUFFICIENT_BALANCE});
   }
 
-  const updatedBalance  = user.balance - cost;
+  const updatedBalance  = Number(user.balance) - Number(cost);
 
   if (outcome === "yes") market.q_yes += shares;
   else market.qno += shares;

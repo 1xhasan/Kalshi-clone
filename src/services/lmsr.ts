@@ -29,5 +29,5 @@ export function costToBuy(market: Market, outcome: "yes" | "no", delta: number):
   const newCost = costFunction(newQYes, newQNo, b);
   const oldCost = costFunction(q_yes, q_no, b);
 
-  return newCost - oldCost;
+  return Number(newCost) - Number(oldCost);
 }
